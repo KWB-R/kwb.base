@@ -4,6 +4,12 @@ Depends: kwb.datetime, kwb.db, kwb.event, kwb.plot, kwb.utils
 Imports: xts
 Author: Hauke Sonnenberg
 Version: 0.4.0
+Remotes: 
+    github::kwb-r/kwb.datetime,
+    github::kwb-r/kwb.db,
+    github::kwb-r/kwb.event,
+    github::kwb-r/kwb.plot,
+    github::kwb-r/kwb.utils
 License: MIT + file LICENSE
 Title: Functions supporting data analysis with R at KWB
 Description: This package originally contained all the different helper 
