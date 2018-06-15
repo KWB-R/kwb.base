@@ -27,3 +27,5 @@ Description: This package originally contained all the different helper
 URL: https://github.com/KWB-R/kwb.base/
 BugReports: https://github.com/KWB-R/kwb.base/issues
 RoxygenNote: 6.0.1
+Suggests: 
+    testthat
