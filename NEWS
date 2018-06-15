@@ -1,0 +1,67 @@
+Changes in v0.4.0
+=================
+* Convert inlinedocs comments to Roxygen comments. Move to 
+https://github.com/kwb-r/kwb.base with this version
+
+Changes in v0.3.0
+=================
+* hsFileLines removed (simply use readLines)
+* hsPrepPdf, hsShowPdf, hsMatrixToListForm moved to kwb.utils
+
+Changes in v0.2.4
+=================
+* package now depends on kwb.utils, kwb.db
+* hsQuoteChr, hsSafeName, hsToPosix moved to kwb.utils
+* all database related functions now in kwb.db
+
+Changes in v0.2.3
+=================
+* new functions: hsFilterRowsWithValuesInColumns, hsSetNamedMatrixColumnsToValues, 
+  hsRenameColumns
+
+Changes in v0.2.2
+=================
+* new functions: hsDumpMdb, hsSetForeignKey, hsMovingMean
+* hsJoinEvents: can now be used with events produced by hsEventsOnChange
+
+Changes in v0.2.1
+=================
+* new function: hsSubstSpecChars
+
+Changes in v0.2.0 
+=================
+* preliminary version to be distributed to MIA-CSO partners
+
+Changes in v0.1.6
+=================
+* xmdb: now returning path to example-mdb in package's sub-folder "extdata"
+* hsEvents: if data frame is given, first column is assumed to contain timestamps
+    new arg "evtSepOp"
+* hsGetEvent: new arg 'useIndex'
+* hsGroupByInterval: new arg '...'
+* New functions hsNiceLabels, hsDateStr, hsDaylightSaving, hsST2WT
+
+Changes in v0.1.5
+=================
+* hsFields: bug fix. Now supporting table names with spaces/special characters.
+* New functions hsGetEvent, hsGroupByInterval
+
+Changes in v0.1.4
+=================
+* hsSigWidth: New arg 'dbg', respection of time unit
+* hsMergeEvents, hsJoinEvents: respection of optional event pauses and time units
+* hsEvents: New args 'pause', 'tUnit'
+* New functions hsAddMissingCols, hsDelEmptyCols, hsEventsToUnit
+
+Changes in v0.1.3
+=================
+* hsShowPdf: enabling paths containing spaces
+* hsMdbTimeSeries, hsGetTimeSeries: New arg 'inclLast'
+* New functions hsCheckForCols, hsSigWidth, hsMergeEvents, hsJoinEvents
+
+Changes in v0.1.2
+=================
+* hsNearestStepMult: New arg 'direction' allows for "rounding" timestamps to 
+nearest, nearest smaller, or nearest greater time step multiple. 
+All callers changed.
+* New functions hsFileLines, hsShowPdf
