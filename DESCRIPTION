@@ -1,8 +1,8 @@
 Package: kwb.base
-Maintainer: Hauke Sonnenberg <hauke.sonnenberg@kompetenz-wasser.de>
+Authors@R: c(person("Hauke", "Sonnenberg", , "hauke.sonnenberg@kompetenz-wasser.de", role = c("aut", "cre")),
+             person("Kompetenzzentrum Wasser Berlin gGmbH", role = c("cph")))
 Depends: kwb.datetime, kwb.db, kwb.event, kwb.plot, kwb.utils
 Imports: xts
-Author: Hauke Sonnenberg
 Version: 0.4.0
 Remotes: 
     github::kwb-r/kwb.datetime,
@@ -24,4 +24,6 @@ Description: This package originally contained all the different helper
     kwb.event, kwb.plot and kwb.utils are automaticallc loaded. I plan to change 
     this behaviour with the next release so that you need to load the other
     packages explicitly, i.e. with library(kwb.datetime), library(kwb.db), etc.
+URL: https://github.com/KWB-R/kwb.base/
+BugReports: https://github.com/KWB-R/kwb.base/issues
 RoxygenNote: 6.0.1
