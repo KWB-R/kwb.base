@@ -128,7 +128,7 @@ selectTimeInterval <- function(x, t1 = NULL, t2 = NULL, width = "-7d",
     "\n*** selectTimeInterval: t1=%s, t2=%s, width=%s\n", t1, t2, width
   ))
 
-  x[hsTsIn(x[[posixColumn]], t1, t2), ]
+  x[timestampIn(x[[posixColumn]], t1, t2), ]
 }
 
 # intervalWidthToSeconds -------------------------------------------------------

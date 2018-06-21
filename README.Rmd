@@ -4,5 +4,5 @@
 [![lifecycle](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://www.tidyverse.org/lifecycle/#stable)
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/kwb.base)]()
 
-# kwb.base
+
 Functions Supporting Data Analysis with R at KWB
