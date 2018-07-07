@@ -1,5 +1,6 @@
 Package: kwb.base
-Authors@R: c(person("Hauke", "Sonnenberg", , "hauke.sonnenberg@kompetenz-wasser.de", role = c("aut", "cre")),
+Authors@R: c(person("Hauke", "Sonnenberg", , "hauke.sonnenberg@kompetenz-wasser.de", 
+                    role = c("aut", "cre"), comment = c(ORCID = "0000-0001-9134-2871")),
              person("Kompetenzzentrum Wasser Berlin gGmbH", role = c("cph")))
 Depends: kwb.datetime, kwb.db, kwb.event, kwb.plot, kwb.utils
 Imports: xts
