@@ -344,3 +344,32 @@ fillup <- function(
   
   columnNumbers
 }
+
+# demo_hsFillUp ----------------------------------------------------------------
+
+#' Create Plot Demonstrating hsFillUp()
+#' 
+demo_hsFillUp <- function()
+{
+  message(
+    "See the code creating the plot by typing 'demo_hsFillUp' and pressing ", 
+    "Enter."
+  )
+  
+  tstamps <- hsMkTimestamps("2010-03-27", to = "2010-03-30", step.s = 3600)
+  
+  df_1 <- data.frame(
+    DateTimeUTC = tstamps,
+    DataValue = stats::rnorm(n = length(tstamps))
+  )
+  
+  limits <- data.frame(
+    from = hsToPosix("2010-03-28"), to = hsToPosix("2010-03-29")
+  )
+  
+  df_2 <- hsFillUp(df_1, includeOrig = FALSE, limits = limits)
+  
+  graphics::plot(df_1, main = "hsFillUp() missing values within a range")
+  
+  graphics::lines(df_2, xlim = range(df_1$DateTimeUTC), type = "b", cex = 0.3)
+}
