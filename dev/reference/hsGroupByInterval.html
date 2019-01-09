@@ -29,6 +29,12 @@
 <script src="../pkgdown.js"></script>
 
 
+<!-- docsearch -->
+<script src="../docsearch.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.1/docsearch.min.css" integrity="sha256-QOSRU/ra9ActyXkIBbiIB144aDBdtvXBcNc3OTNuX/Q=" crossorigin="anonymous" />
+<link href="../docsearch.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+
 
 <meta property="og:title" content="Group Data in Time Intervals — hsGroupByInterval" />
 
@@ -89,6 +95,12 @@ values within the group by using a given function (e.g. sum, mean, min, max)" />
   </a>
 </li>
       </ul>
+      
+      <form class="navbar-form navbar-right" role="search">
+        <div class="form-group">
+          <input type="search" class="form-control" name="search-input" id="search-input" placeholder="Search..." aria-label="Search for..." autocomplete="off">
+        </div>
+      </form>
       
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
@@ -207,7 +219,7 @@ function</p></td>
 #&gt; 4 2012-01-01 12:15:00 2012-01-01 12:15:00 2012-01-01 12:19:59 -7.313752e-01
 #&gt; 5 2012-01-01 12:20:00 2012-01-01 12:20:00 2012-01-01 12:24:59 -2.449294e-16</div><div class='input'>
 <span class='co'>## Show a plot demonstrating the effect of offset1 and offset2</span>
-<span class='fu'><a href='demoGroupByInterval.html'>demoGroupByInterval</a></span>(<span class='no'>df</span>)</div><div class='output co'>#&gt; Running command: &gt;&gt;&gt;"false" "/tmp/RtmpG76iyA/file63bf38e6918e.pdf"&lt;&lt;&lt;</div><div class='input'>
+<span class='fu'><a href='demoGroupByInterval.html'>demoGroupByInterval</a></span>(<span class='no'>df</span>)</div><div class='output co'>#&gt; Running command: &gt;&gt;&gt;"false" "/tmp/RtmpXZhtZJ/file3e1634fb3607.pdf"&lt;&lt;&lt;</div><div class='input'>
 <span class='co'>## Handling NA values...</span>
 
 <span class='co'>## Set y to NA at 2 random positions</span>
@@ -280,6 +292,23 @@ function</p></td>
    </div>
 
   
+<script src="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.1/docsearch.min.js" integrity="sha256-GKvGqXDznoRYHCwKXGnuchvKSwmx9SRMrZOTh2g4Sb0=" crossorigin="anonymous"></script>
+<script>
+  docsearch({
+    
+    
+    apiKey: '4772493557078699a02880258ace2686',
+    indexName: 'kwb_base',
+    inputSelector: 'input#search-input.form-control',
+    transformData: function(hits) {
+      return hits.map(function (hit) {
+        hit.url = updateHitURL(hit);
+        return hit;
+      });
+    }
+  });
+</script>
+
 
   </body>
 </html>
