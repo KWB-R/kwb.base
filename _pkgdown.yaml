@@ -6,7 +6,9 @@ authors:
 template:
   params:
     bootswatch: cerulean
-
+    docsearch:
+      api_key: 4772493557078699a02880258ace2686
+      index_name: kwb_base
 development:
   mode: auto
 
