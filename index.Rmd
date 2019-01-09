@@ -4,8 +4,6 @@
 [![Project Status](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/kwb.base)]()
 
-# kwb.base
-
 This package originally contained all the different helper 
 functions developed and used at KWB. As it grew, functions were extracted 
 into new packages that are dedicated to certain topics. The database access 
@@ -21,13 +19,7 @@ packages explicitly, i.e. with library(kwb.datetime), library(kwb.db), etc.
 
 ## Installation
 
-```r
+```{r echo = TRUE, eval = FALSE}
 #install.packages("remotes", repos = "https://cloud.r-project.org")
 remotes::install_github("KWB-R/kwb.base")
 ```
-
-## Documentation
-
-Release: [https://kwb-r.github.io/kwb.base](https://kwb-r.github.io/kwb.base)
-
-Development: [https://kwb-r.github.io/kwb.base/dev](https://kwb-r.github.io/kwb.base/dev)
