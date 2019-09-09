@@ -5,7 +5,8 @@
 \title{Plot Sequence Events}
 \usage{
 plotSequenceEvents(timestamps, sequences,
-  main = "Overlapping time sequences in hydraulic data", language = "de")
+  main = "Overlapping time sequences in hydraulic data",
+  language = "de")
 }
 \arguments{
 \item{timestamps}{vector of timestamps}

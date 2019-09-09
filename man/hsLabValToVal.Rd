@@ -4,9 +4,10 @@
 \alias{hsLabValToVal}
 \title{Laboratory Value to Numeric Value}
 \usage{
-hsLabValToVal(x, country, detLimFactorBelow = 0.5, detLimFactorAbove = 2,
-  factors = c(`<` = detLimFactorBelow, `<<` = detLimFactorBelow, `>` =
-  detLimFactorAbove, `>>` = detLimFactorAbove), stopOnError = TRUE)
+hsLabValToVal(x, country, detLimFactorBelow = 0.5,
+  detLimFactorAbove = 2, factors = c(`<` = detLimFactorBelow, `<<` =
+  detLimFactorBelow, `>` = detLimFactorAbove, `>>` = detLimFactorAbove),
+  stopOnError = TRUE)
 }
 \arguments{
 \item{x}{(vector of) character(s) representing values, possibly starting with
