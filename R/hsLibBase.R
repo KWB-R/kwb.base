@@ -811,6 +811,7 @@ demoGroupByInterval <- function(
 #' @param dbg if TRUE, debug messages are shown
 #'
 #' @examples
+#' 
 #' ## Get an example time-series with values every one minute
 #' step <- 60
 #' df <- hsExampleTSeries(step)
@@ -833,8 +834,9 @@ demoGroupByInterval <- function(
 #' df.agg3
 #'
 #' ## Show a plot demonstrating the effect of offset1 and offset2
+#' #' \dontrun{
 #' demoGroupByInterval(df)
-#'
+#'}
 #' ## Handling NA values...
 #'
 #' ## Set y to NA at 2 random positions

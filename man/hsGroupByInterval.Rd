@@ -47,6 +47,7 @@ Builds groups of rows belonging to the same time interval and aggregates the
 values within the group by using a given function (e.g. sum, mean, min, max)
 }
 \examples{
+
 ## Get an example time-series with values every one minute
 step <- 60
 df <- hsExampleTSeries(step)
@@ -69,8 +70,9 @@ df.agg3 <- hsGroupByInterval(df, interval = 5*step, mean, limits = TRUE,
 df.agg3
 
 ## Show a plot demonstrating the effect of offset1 and offset2
+#' \dontrun{
 demoGroupByInterval(df)
-
+}
 ## Handling NA values...
 
 ## Set y to NA at 2 random positions
