@@ -834,7 +834,7 @@ demoGroupByInterval <- function(
 #' df.agg3
 #'
 #' ## Show a plot demonstrating the effect of offset1 and offset2
-#' #' \dontrun{
+#' \dontrun{
 #' demoGroupByInterval(df)
 #'}
 #' ## Handling NA values...
