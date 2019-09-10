@@ -190,7 +190,8 @@ function</p></td>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>## Get an example time-series with values every one minute</span>
+    <pre class="examples"><div class='input'>
+<span class='co'>## Get an example time-series with values every one minute</span>
 <span class='no'>step</span> <span class='kw'>&lt;-</span> <span class='fl'>60</span>
 <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='hsExampleTSeries.html'>hsExampleTSeries</a></span>(<span class='no'>step</span>)
 
@@ -224,7 +225,9 @@ function</p></td>
 #&gt; 4 2012-01-01 12:15:00 2012-01-01 12:15:00 2012-01-01 12:19:59 -7.313752e-01
 #&gt; 5 2012-01-01 12:20:00 2012-01-01 12:20:00 2012-01-01 12:24:59 -2.449294e-16</div><div class='input'>
 <span class='co'>## Show a plot demonstrating the effect of offset1 and offset2</span>
-<span class='fu'><a href='demoGroupByInterval.html'>demoGroupByInterval</a></span>(<span class='no'>df</span>)</div><div class='output co'>#&gt; Running command: &gt;&gt;&gt;"false" "/tmp/Rtmp9C6QlT/file5f7a5701e6bf.pdf"&lt;&lt;&lt;</div><div class='input'>
+<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='fu'><a href='demoGroupByInterval.html'>demoGroupByInterval</a></span>(<span class='no'>df</span>)
+}
 <span class='co'>## Handling NA values...</span>
 
 <span class='co'>## Set y to NA at 2 random positions</span>
