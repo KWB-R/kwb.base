@@ -3,7 +3,7 @@
 #
 
 test_that("demoGroupByInterval() works", {
-
+  skip_on_appveyor()
   kwb.base:::demoGroupByInterval()
 
 })
