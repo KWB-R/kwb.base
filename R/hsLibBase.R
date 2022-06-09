@@ -231,6 +231,7 @@ hsLabValToVal_old <- function(
 #'   in forms of a vector instead as a data frame.
 #' @export
 #' @importFrom kwb.utils isNaInAllColumns isNaInAllRows isNullOrEmpty
+#' @export
 hsDelNaRowsOrCols <- function(df, rows = TRUE, drop = FALSE)
 {  
   ## Find rows that are NA in all columns
@@ -662,8 +663,8 @@ artificialHydrograph <- function(
 #' @param step time step in seconds
 #' 
 #' @return data frame with columns \emph{t} (timestamp) and \emph{y} (sinus values)
-#' @export
 #' @importFrom kwb.datetime hsToPosix
+#' @export
 hsExampleTSeries <- function(step)
 {
   ## Generate a data frame containing a sinus time series with
@@ -868,9 +869,9 @@ demoGroupByInterval <- function(
 #'
 #' ## ignore NA values by passing na.rm = TRUE to the aggregate function
 #' hsGroupByInterval(df, interval = 300, mean, na.rm = TRUE)
-#' @export
 #' @importFrom stats aggregate
 #' @importFrom utils head
+#' @export
 hsGroupByInterval <- function(
   data, interval, FUN, tsField = names(data)[1], offset1 = 0, 
   offset2 = interval / 2, limits = FALSE, ..., dbg = FALSE
