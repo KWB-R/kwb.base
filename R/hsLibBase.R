@@ -231,7 +231,6 @@ hsLabValToVal_old <- function(
 #'   in forms of a vector instead as a data frame.
 #' @export
 #' @importFrom kwb.utils isNaInAllColumns isNaInAllRows isNullOrEmpty
-#' @export
 hsDelNaRowsOrCols <- function(df, rows = TRUE, drop = FALSE)
 {  
   ## Find rows that are NA in all columns

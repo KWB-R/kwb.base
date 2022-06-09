@@ -354,7 +354,6 @@ fillup <- function(
 
 #' Create Plot Demonstrating hsFillUp()
 #' 
-#' @export
 #' @return demo plot hsFillUp
 #' @export
 #' @importFrom stats rnorm
