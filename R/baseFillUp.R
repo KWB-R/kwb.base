@@ -150,7 +150,7 @@ hsFillUp <- function(
 #' @param dbg If TRUE, debug messages are shown
 #'
 #' @return Returns a data.frame
-#'   
+#' @importFrom kwb.datetime roundTime
 fillup <- function(
   tseries, tsField, step_s, forceStep, interpol, includeOrig, default = NA, 
   dbg = FALSE   
@@ -164,8 +164,8 @@ fillup <- function(
   
   ## If needed, get lower minimum or greater maximum representing multiples
   ## of the time step.
-  tbeg <- roundTime(timeRange[1], step_s, 1)
-  tend <- roundTime(timeRange[2], step_s, 0)      
+  tbeg <- kwb.datetime::roundTime(timeRange[1], step_s, 1)
+  tend <- kwb.datetime::roundTime(timeRange[2], step_s, 0)      
   
   ## Generate the complete series of "regular" timestamps (multiples of 
   ## time-step) between tbeg and tend

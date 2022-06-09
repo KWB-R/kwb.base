@@ -56,7 +56,7 @@ dataFrameToXts <- function(
 #' @param firstDay first day as text, in "yyyy-mm-dd" format
 #' @param lastDay last day as text, in "yyyy-mm-dd" format  
 #' @param dbg if \code{TRUE}, debug messages are shown
-#' @importFrom kwb.utils catIf
+#' @importFrom kwb.utils catIf isNullOrEmpty
 #' 
 selectTimeIntervalDays <- function(
   dat, days = 7, firstDay = as.character(as.Date(lastDay) - days),
@@ -72,7 +72,7 @@ selectTimeIntervalDays <- function(
   
   x <- dat[included, ]
   
-  if (!isNullOrEmpty(included)) {
+  if (!kwb.utils::isNullOrEmpty(included)) {
     
     attr(x, "rowRange") <- range(included)
   }
@@ -94,6 +94,7 @@ selectTimeIntervalDays <- function(
 #'   relevant timestamps
 #' @param dbg if \code{TRUE}, debug messages are shown
 #' @importFrom kwb.utils posixColumnAtPosition
+#' @importFrom kwb.datetime timestampIn
 selectTimeInterval <- function(x, t1 = NULL, t2 = NULL, width = "-7d",
   posixColumn = kwb.utils::posixColumnAtPosition(x), dbg = TRUE
 )
@@ -129,7 +130,7 @@ selectTimeInterval <- function(x, t1 = NULL, t2 = NULL, width = "-7d",
     "\n*** selectTimeInterval: t1=%s, t2=%s, width=%s\n", t1, t2, width
   ))
 
-  x[timestampIn(x[[posixColumn]], t1, t2), ]
+  x[kwb.datetime::timestampIn(x[[posixColumn]], t1, t2), ]
 }
 
 # intervalWidthToSeconds -------------------------------------------------------
@@ -160,7 +161,7 @@ intervalWidthToSeconds <- function(intervalWidth)
 #' @importFrom utils head
 firstTimestamp <- function(x)
 {
-  timestamps <- firstPosixColumn(x)
+  timestamps <- kwb.utils::firstPosixColumn(x)
   
   firstTs <- utils::head(timestamps, 1)
   
@@ -178,9 +179,10 @@ firstTimestamp <- function(x)
 #' 
 #' @param x data frame containing a date/time column  
 #' @importFrom utils tail
+#' @importFrom kwb.utils firstPosixColumn
 lastTimestamp <- function(x)
 {
-  timestamps <- firstPosixColumn(x)
+  timestamps <- kwb.utils::firstPosixColumn(x)
   
   lastTs <- utils::tail(timestamps, 1)
   

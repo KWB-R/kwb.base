@@ -227,7 +227,7 @@ hsLabValToVal_old <- function(
 #' @param rows if TRUE, rows that only contain NAs are deleted, else columns.
 #' @param drop if TRUE and only one row/column remains this row/column is returned
 #'   in forms of a vector instead as a data frame.
-#' 
+#' @importFrom kwb.utils isNaInAllColumns isNaInAllRows isNullOrEmpty
 hsDelNaRowsOrCols <- function(df, rows = TRUE, drop = FALSE)
 {  
   ## Find rows that are NA in all columns
@@ -238,16 +238,16 @@ hsDelNaRowsOrCols <- function(df, rows = TRUE, drop = FALSE)
   if (isTRUE(rows)) {
     
     cat("Removing rows that contain only NAs...\n")
-    idx <- which(isNaInAllColumns(df))
+    idx <- which(kwb.utils::isNaInAllColumns(df))
     
   } else {
     
     cat("Removing columns that contain only NAs...\n")
-    idx <- which(isNaInAllRows(df))
+    idx <- which(kwb.utils::isNaInAllRows(df))
   }
   
   ## Remove NA rows/columns
-  if (! isNullOrEmpty(idx)) {
+  if (! kwb.utils::isNullOrEmpty(idx)) {
     
     if (isTRUE(rows)) {
       
