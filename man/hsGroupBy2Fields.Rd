@@ -26,7 +26,7 @@ hsGroupBy2Fields(
 to decreasing values of field1}
 
 \item{boolDesc2}{if TRUE, rows in result matrix will be ordered according to
-decreasing values of field2}
+decreasing values of field2#'}
 }
 \value{
 matrix with as many rows as there are distinct values in field1 and
