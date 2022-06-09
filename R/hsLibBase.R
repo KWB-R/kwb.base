@@ -655,6 +655,7 @@ artificialHydrograph <- function(
 #' 
 #' @return data frame with columns \emph{t} (timestamp) and \emph{y} (sinus values)
 #' @importFrom kwb.datetime hsToPosix
+#' @export
 hsExampleTSeries <- function(step)
 {
   ## Generate a data frame containing a sinus time series with
@@ -816,7 +817,7 @@ demoGroupByInterval <- function(
 #' @param \dots further arguments passed to aggregate, the internally called
 #'   function
 #' @param dbg if TRUE, debug messages are shown
-#'
+#' @export
 #' @examples
 #' 
 #' ## Get an example time-series with values every one minute
