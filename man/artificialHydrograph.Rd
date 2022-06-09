@@ -4,8 +4,7 @@
 \alias{artificialHydrograph}
 \title{Artificial Hydrograph}
 \usage{
-artificialHydrograph(step.s = 3600, from = "2015-01-01",
-  to = "2015-01-10")
+artificialHydrograph(step.s = 3600, from = "2015-01-01", to = "2015-01-10")
 }
 \arguments{
 \item{step.s}{time step in seconds}

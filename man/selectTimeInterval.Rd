@@ -4,8 +4,14 @@
 \alias{selectTimeInterval}
 \title{Select Time Interval}
 \usage{
-selectTimeInterval(x, t1 = NULL, t2 = NULL, width = "-7d",
-  posixColumn = posixColumnAtPosition(x), dbg = TRUE)
+selectTimeInterval(
+  x,
+  t1 = NULL,
+  t2 = NULL,
+  width = "-7d",
+  posixColumn = posixColumnAtPosition(x),
+  dbg = TRUE
+)
 }
 \arguments{
 \item{x}{data frame with at least one time column}

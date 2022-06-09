@@ -4,9 +4,13 @@
 \alias{selectTimeIntervalDays}
 \title{Select Time Interval Days}
 \usage{
-selectTimeIntervalDays(dat, days = 7,
+selectTimeIntervalDays(
+  dat,
+  days = 7,
   firstDay = as.character(as.Date(lastDay) - days),
-  lastDay = substr(utils::tail(dat$DateTime, 1), 1, 10), dbg = TRUE)
+  lastDay = substr(utils::tail(dat$DateTime, 1), 1, 10),
+  dbg = TRUE
+)
 }
 \arguments{
 \item{dat}{data frame with column "DateTime"}

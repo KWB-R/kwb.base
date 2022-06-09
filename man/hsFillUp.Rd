@@ -4,10 +4,17 @@
 \alias{hsFillUp}
 \title{Fill-up with Missing Timestamps}
 \usage{
-hsFillUp(tseries,
+hsFillUp(
+  tseries,
   tsField = names(tseries)[posixColumnAtPosition(tseries)[1]],
-  step_s = 60, forceStep = TRUE, limits = NULL, interpol = TRUE,
-  includeOrig = TRUE, default = NA, dbg = FALSE)
+  step_s = 60,
+  forceStep = TRUE,
+  limits = NULL,
+  interpol = TRUE,
+  includeOrig = TRUE,
+  default = NA,
+  dbg = FALSE
+)
 }
 \arguments{
 \item{tseries}{data frame representing a time-series of values}

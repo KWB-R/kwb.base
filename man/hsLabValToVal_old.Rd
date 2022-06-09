@@ -4,8 +4,13 @@
 \alias{hsLabValToVal_old}
 \title{Laboratory Value to Numeric Value (Old Version)}
 \usage{
-hsLabValToVal_old(x, country, detLimFactorBelow = 0.5,
-  detLimFactorAbove = 2, stopOnError = TRUE)
+hsLabValToVal_old(
+  x,
+  country,
+  detLimFactorBelow = 0.5,
+  detLimFactorAbove = 2,
+  stopOnError = TRUE
+)
 }
 \arguments{
 \item{x}{(vector of) character(s) representing values, possibly starting with

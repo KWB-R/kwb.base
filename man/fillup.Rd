@@ -4,8 +4,16 @@
 \alias{fillup}
 \title{Fill-up with Missing Timestamps}
 \usage{
-fillup(tseries, tsField, step_s, forceStep, interpol, includeOrig,
-  default = NA, dbg = FALSE)
+fillup(
+  tseries,
+  tsField,
+  step_s,
+  forceStep,
+  interpol,
+  includeOrig,
+  default = NA,
+  dbg = FALSE
+)
 }
 \arguments{
 \item{tseries}{data frame representing a time-series of values}

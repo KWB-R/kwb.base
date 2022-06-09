@@ -4,8 +4,10 @@
 \alias{dataFrameToXts}
 \title{Convert Time Series Data Frame to xts Object}
 \usage{
-dataFrameToXts(dataFrame,
-  timeColumn = names(dataFrame)[posixColumnAtPosition(dataFrame)[1]])
+dataFrameToXts(
+  dataFrame,
+  timeColumn = names(dataFrame)[posixColumnAtPosition(dataFrame)[1]]
+)
 }
 \arguments{
 \item{dataFrame}{data frame containing a timestamp column}

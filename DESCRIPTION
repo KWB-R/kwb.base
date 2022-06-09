@@ -1,32 +1,26 @@
 Package: kwb.base
 Title: Functions supporting data analysis with R at KWB
 Version: 0.5.0
-Authors@R: 
-    c(person(given = "Hauke",
-             family = "Sonnenberg",
-             role = c("aut", "cre"),
-             email = "hauke.sonnenberg@kompetenz-wasser.de",
-             comment = c(ORCID = "0000-0001-9134-2871")),
-      person(given = "FAKIN",
-             role = "fnd"),
-      person(given = "MIA-CSO",
-             role = "fnd"),
-      person(given = "Kompetenzzentrum Wasser Berlin gGmbH",
-             role = "cph"))
-Description: This package originally contained all the
-    different helper functions developed and used at KWB. As it grew,
-    functions were extracted into new packages that are dedicated to
-    certain topics. The database access functions, for example, that were
-    originally contained here, are now in the package kwb.db. Functions
-    that help to create event information from time series data have been
-    moved to kwb.event and date/time related functions are now in
-    kwb.datetime. This package still contains some functions that are used
-    in different scripts of different KWB projects.  Currently, when
-    loading this package, the packages kwb.datetime, kwb.db, kwb.event,
-    kwb.plot and kwb.utils are automaticallc loaded. I plan to change this
-    behaviour with the next release so that you need to load the other
-    packages explicitly, i.e. with library(kwb.datetime), library(kwb.db),
-    etc.
+Authors@R: c(
+    person("Hauke", "Sonnenberg", , "hauke.sonnenberg@kompetenz-wasser.de", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0001-9134-2871")),
+    person("FAKIN", role = "fnd"),
+    person("MIA-CSO", role = "fnd"),
+    person("Kompetenzzentrum Wasser Berlin gGmbH", role = "cph")
+  )
+Description: This package originally contained all the different helper
+    functions developed and used at KWB. As it grew, functions were
+    extracted into new packages that are dedicated to certain topics. The
+    database access functions, for example, that were originally contained
+    here, are now in the package kwb.db. Functions that help to create
+    event information from time series data have been moved to kwb.event
+    and date/time related functions are now in kwb.datetime. This package
+    still contains some functions that are used in different scripts of
+    different KWB projects.  Currently, when loading this package, the
+    packages kwb.datetime, kwb.db, kwb.event, kwb.plot and kwb.utils are
+    automaticallc loaded. I plan to change this behaviour with the next
+    release so that you need to load the other packages explicitly, i.e.
+    with library(kwb.datetime), library(kwb.db), etc.
 License: MIT + file LICENSE
 URL: https://github.com/KWB-R/kwb.base/
 BugReports: https://github.com/KWB-R/kwb.base/issues
@@ -47,4 +41,4 @@ Remotes:
     github::kwb-r/kwb.plot,
     github::kwb-r/kwb.utils
 Encoding: UTF-8
-RoxygenNote: 6.1.1
+RoxygenNote: 7.1.2

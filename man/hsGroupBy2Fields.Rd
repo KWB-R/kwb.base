@@ -4,8 +4,14 @@
 \alias{hsGroupBy2Fields}
 \title{Two-field Grouping of a Data Frame}
 \usage{
-hsGroupBy2Fields(frmData, strValField, strField1, strField2,
-  boolDesc1 = FALSE, boolDesc2 = FALSE)
+hsGroupBy2Fields(
+  frmData,
+  strValField,
+  strField1,
+  strField2,
+  boolDesc1 = FALSE,
+  boolDesc2 = FALSE
+)
 }
 \arguments{
 \item{frmData}{data.frame containing data to be grouped.}

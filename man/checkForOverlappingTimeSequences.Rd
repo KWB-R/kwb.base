@@ -4,8 +4,10 @@
 \alias{checkForOverlappingTimeSequences}
 \title{Check for Overlapping Time Sequences}
 \usage{
-checkForOverlappingTimeSequences(dataFrame,
-  main = "Overlapping time sequences in hydraulic data")
+checkForOverlappingTimeSequences(
+  dataFrame,
+  main = "Overlapping time sequences in hydraulic data"
+)
 }
 \arguments{
 \item{dataFrame}{frame with timestamps in first column}
