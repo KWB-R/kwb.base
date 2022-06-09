@@ -8,7 +8,7 @@ Authors@R: c(
            comment = c(ORCID = "0000-0003-0647-7726")),
     person("FAKIN", role = "fnd"),
     person("MIA-CSO", role = "fnd"),
-    person("Kompetenzzentrum Wasser Berlin gGmbH", role = "cph")
+    person("Kompetenzzentrum Wasser Berlin gGmbH (KWB)", role = "cph")
   )
 Description: This package originally contained all the different helper
     functions developed and used at KWB. As it grew, functions were
