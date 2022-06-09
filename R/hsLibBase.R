@@ -228,6 +228,7 @@ hsLabValToVal_old <- function(
 #' @param drop if TRUE and only one row/column remains this row/column is returned
 #'   in forms of a vector instead as a data frame.
 #' @importFrom kwb.utils isNaInAllColumns isNaInAllRows isNullOrEmpty
+#' @export
 hsDelNaRowsOrCols <- function(df, rows = TRUE, drop = FALSE)
 {  
   ## Find rows that are NA in all columns
@@ -863,6 +864,7 @@ demoGroupByInterval <- function(
 #' @export
 #' @importFrom stats aggregate
 #' @importFrom utils head
+#' @export
 hsGroupByInterval <- function(
   data, interval, FUN, tsField = names(data)[1], offset1 = 0, 
   offset2 = interval / 2, limits = FALSE, ..., dbg = FALSE

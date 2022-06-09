@@ -205,6 +205,7 @@ lastTimestamp <- function(x)
 #' 
 #' @return time series, shifted to winter time (timezone is set to "UTC")
 #' @importFrom kwb.utils printIf
+#' @export
 hsST2WT <- function(tstamps, dbg = FALSE)
 {
   ## "hardcode" timezone to UTC, thus taking timestamps as they are and 
