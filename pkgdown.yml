@@ -1,5 +1,9 @@
-pandoc: 2.2.1
-pkgdown: 1.1.0
+pandoc: 2.7.3
+pkgdown: 2.0.3
 pkgdown_sha: ~
-articles: []
+articles: {}
+last_built: 2022-06-09T13:26Z
+urls:
+  reference: https://kwb-r.github.io/kwb.base/reference
+  article: https://kwb-r.github.io/kwb.base/articles
 
