@@ -104,7 +104,7 @@ hsFilterRowsWithValuesInColumns <- function(dframe, columnValuePairs)
 #'   in case of detection limit exceedance, may be a substitute value. If there
 #'   were conversion errors, the column \emph{numericValue} containing the
 #'   indices of the wrongly formatted values in its attribute "errorIndices".
-#'   
+#' @importFrom kwb.utils hsChrToNum
 hsLabValToVal <- function(
   x, country, detLimFactorBelow = 0.5, detLimFactorAbove = 2,
   factors = c("<" = detLimFactorBelow, "<<" = detLimFactorBelow, 
@@ -136,7 +136,7 @@ hsLabValToVal <- function(
   outOfLimit[indices_2] <- substr(x[indices_2], 1, 2)  # 1st two characters
   
   ## set vector containing values  
-  numericValue <- hsChrToNum(textValues, country, stopOnError = stopOnError)  
+  numericValue <- kwb.utils::hsChrToNum(textValues, country, stopOnError = stopOnError)  
   
   ## Multiply values with factors if value was out of detection limits
   multiplyWith <- rep(1, N)
@@ -181,7 +181,7 @@ hsLabValToVal <- function(
 #'   in case of detection limit exceedance, may be a substitute value. If there
 #'   were conversion errors, the column \emph{numericValue} containing the
 #'   indices of the wrongly formatted values in its attribute "errorIndices".
-#' 
+#' @importFrom kwb.utils hsChrToNum
 hsLabValToVal_old <- function(
   x, country, detLimFactorBelow = 0.5, detLimFactorAbove = 2, stopOnError = TRUE
 )
@@ -207,7 +207,7 @@ hsLabValToVal_old <- function(
   outOfLimit[indices] <- firstCharacter[indices]
   
   ## set vector containing values  
-  numericValue <- hsChrToNum(textValues, country, stopOnError = stopOnError)  
+  numericValue <- kwb.utils::hsChrToNum(textValues, country, stopOnError = stopOnError)  
   
   ## Multiply values with factors if value was out of detection limits
   below <- outOfLimit == "<"
