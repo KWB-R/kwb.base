@@ -1,12 +1,16 @@
 Package: kwb.base
 Title: Functions supporting data analysis with R at KWB
-Version: 0.4.0.9000
+Version: 0.5.0
 Authors@R: 
     c(person(given = "Hauke",
              family = "Sonnenberg",
              role = c("aut", "cre"),
              email = "hauke.sonnenberg@kompetenz-wasser.de",
              comment = c(ORCID = "0000-0001-9134-2871")),
+      person(given = "FAKIN",
+             role = "fnd"),
+      person(given = "MIA-CSO",
+             role = "fnd"),
       person(given = "Kompetenzzentrum Wasser Berlin gGmbH",
              role = "cph"))
 Description: This package originally contained all the
