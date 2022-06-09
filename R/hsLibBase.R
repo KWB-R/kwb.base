@@ -859,6 +859,7 @@ demoGroupByInterval <- function(
 #'
 #' ## ignore NA values by passing na.rm = TRUE to the aggregate function
 #' hsGroupByInterval(df, interval = 300, mean, na.rm = TRUE)
+#' @export
 #' @importFrom stats aggregate
 #' @importFrom utils head
 hsGroupByInterval <- function(

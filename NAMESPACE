@@ -2,6 +2,7 @@
 
 export(demo_hsFillUp)
 export(hsExampleTSeries)
+export(hsGroupByInterval)
 importFrom(grDevices,dev.cur)
 importFrom(grDevices,dev.list)
 importFrom(grDevices,dev.off)

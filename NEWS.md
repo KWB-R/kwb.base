@@ -1,4 +1,4 @@
-# [kwb.base 0.5.0](https://github.com/KWB-R/kwb.base/releases/tag/v0.5.0)  <small>2022-06-09</small>
+# [kwb.base 0.5.0](https://github.com/KWB-R/kwb.base/releases/tag/v0.5.0)  <small>2022-06-10</small>
 
 * Harmonise with R package [kwb.pkgbuild](https://github.com/kwb-r/kwb.pkgbuild),
 e.g. use GitHub actions as CI (instead of travis/appeyor)
