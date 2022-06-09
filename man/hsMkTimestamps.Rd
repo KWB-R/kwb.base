@@ -46,5 +46,4 @@ hsMkTimestamps("2011-01-01", "2011-02-01", 300, kwb.db::xmdb())
 # 'C:/Users/hsonne/Documents/R/win-library/2.14/
 #   kwb.base/extdata/RExKwbBase.mdb'.
 # Timestamp field has been set as primary key.
-
 }

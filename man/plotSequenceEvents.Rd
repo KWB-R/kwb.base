@@ -4,9 +4,12 @@
 \alias{plotSequenceEvents}
 \title{Plot Sequence Events}
 \usage{
-plotSequenceEvents(timestamps, sequences,
+plotSequenceEvents(
+  timestamps,
+  sequences,
   main = "Overlapping time sequences in hydraulic data",
-  language = "de")
+  language = "de"
+)
 }
 \arguments{
 \item{timestamps}{vector of timestamps}

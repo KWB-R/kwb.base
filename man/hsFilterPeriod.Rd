@@ -4,8 +4,14 @@
 \alias{hsFilterPeriod}
 \title{Filter Rows Within Time Period}
 \usage{
-hsFilterPeriod(tSeries, minDate, maxDate, tsField, maxIncluded = FALSE,
-  dbg = FALSE)
+hsFilterPeriod(
+  tSeries,
+  minDate,
+  maxDate,
+  tsField,
+  maxIncluded = FALSE,
+  dbg = FALSE
+)
 }
 \arguments{
 \item{tSeries}{data.frame containing time-series data.}

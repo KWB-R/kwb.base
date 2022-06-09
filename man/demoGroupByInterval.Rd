@@ -4,8 +4,11 @@
 \alias{demoGroupByInterval}
 \title{Demonstrate hsGroupByInterval}
 \usage{
-demoGroupByInterval(df = hsExampleTSeries(60),
-  step = kwb.datetime::minTimeStep(df[, 1]), to_pdf = TRUE)
+demoGroupByInterval(
+  df = hsExampleTSeries(60),
+  step = kwb.datetime::minTimeStep(df[, 1]),
+  to_pdf = TRUE
+)
 }
 \arguments{
 \item{df}{data frame containing data to be used for the demonstration}

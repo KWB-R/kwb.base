@@ -4,9 +4,17 @@
 \alias{hsGroupByInterval}
 \title{Group Data in Time Intervals}
 \usage{
-hsGroupByInterval(data, interval, FUN, tsField = names(data)[1],
-  offset1 = 0, offset2 = interval/2, limits = FALSE, ...,
-  dbg = FALSE)
+hsGroupByInterval(
+  data,
+  interval,
+  FUN,
+  tsField = names(data)[1],
+  offset1 = 0,
+  offset2 = interval/2,
+  limits = FALSE,
+  ...,
+  dbg = FALSE
+)
 }
 \arguments{
 \item{data}{data frame containing a timestamp field and data fields to be
@@ -87,5 +95,4 @@ hsGroupByInterval(df, interval = 300, mean)
 
 ## ignore NA values by passing na.rm = TRUE to the aggregate function
 hsGroupByInterval(df, interval = 300, mean, na.rm = TRUE)
-
 }

@@ -4,8 +4,7 @@
 \alias{hsNiceLabels}
 \title{Nice Labels}
 \usage{
-hsNiceLabels(label, labelstep = NULL, labelpos = NULL, mindist = 1,
-  offset = 0)
+hsNiceLabels(label, labelstep = NULL, labelpos = NULL, mindist = 1, offset = 0)
 }
 \arguments{
 \item{label}{see \code{\link[kwb.plot]{niceLabels}}}

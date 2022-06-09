@@ -97,7 +97,7 @@ getSequenceNumber <- function(timestamps)
 #'   \code{\link{getOverlappingTimeSequences}} with attribute "sequenceNumber"
 #' @param main plot title
 #' @param language "de" (German) or something else (English)
-#' 
+#' @importFrom kwb.plot setMargins
 plotSequenceEvents <- function(
   timestamps, sequences, main = "Overlapping time sequences in hydraulic data",
   language = "de"
@@ -108,7 +108,7 @@ plotSequenceEvents <- function(
   graphicalParameters <- graphics::par(no.readonly=TRUE)
   on.exit(graphics::par(graphicalParameters))
   
-  setMargins(bottom = 10)
+  kwb.plot::setMargins(bottom = 10)
 
   graphics::plot(timestamps, attr(sequences, "sequenceNumber"), ylim = c(n, 1),
        xaxt = "n", 
