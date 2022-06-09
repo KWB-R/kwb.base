@@ -23,7 +23,7 @@
 #' @param default value to be used if there are not enough (at least to) non-NA
 #'   values to be used for interpolation. Default: NA
 #' @param dbg If TRUE, debug messages are shown
-#'
+#' @export
 #' @return Returns a data.frame
 #' @importFrom kwb.utils catIf posixColumnAtPosition
 hsFillUp <- function(
@@ -150,6 +150,7 @@ hsFillUp <- function(
 #' @param dbg If TRUE, debug messages are shown
 #'
 #' @return Returns a data.frame
+#' @export
 #' @importFrom kwb.datetime roundTime
 fillup <- function(
   tseries, tsField, step_s, forceStep, interpol, includeOrig, default = NA, 
@@ -353,8 +354,8 @@ fillup <- function(
 
 #' Create Plot Demonstrating hsFillUp()
 #' 
-#' @export
 #' @return demo plot hsFillUp
+#' @export
 #' @importFrom stats rnorm
 #' @importFrom  graphics lines plot
 demo_hsFillUp <- function()

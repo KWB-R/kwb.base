@@ -8,7 +8,7 @@
 #' @param main plot title, passed to \code{\link{plotSequenceEvents}}
 #' 
 #' @return \code{TRUE} if there are overlapping sequences, else \code{FALSE}
-#' 
+#' @export
 checkForOverlappingTimeSequences <- function(
   dataFrame, main = "Overlapping time sequences in hydraulic data"
 )
@@ -49,7 +49,7 @@ checkForOverlappingTimeSequences <- function(
 #' @return data frame with columns \emph{sequenceNo}, \emph{tBeg}, \emph{tEnd}.
 #'   In the attribute "sequenceNumber" the vector of sequenceNumbers, each of
 #'   which corresponds to one timestamp is returned.
-#' 
+#' @export
 getOverlappingTimeSequences <- function(timestamps)
 {
   stopifnot(inherits(timestamps, "POSIXt"))
@@ -78,7 +78,7 @@ getOverlappingTimeSequences <- function(timestamps)
 #'   indicating the belonging to a sequence of increasing timestamps. 
 #'   If the vector contains only ones, this means that \emph{timestamps} is 
 #'   increasingly sorted.
-#' 
+#' @export
 getSequenceNumber <- function(timestamps)
 {
   backShiftAt <- which(diff(as.integer(timestamps)) <= 0)
@@ -97,6 +97,7 @@ getSequenceNumber <- function(timestamps)
 #'   \code{\link{getOverlappingTimeSequences}} with attribute "sequenceNumber"
 #' @param main plot title
 #' @param language "de" (German) or something else (English)
+#' @export
 #' @importFrom kwb.plot setMargins
 plotSequenceEvents <- function(
   timestamps, sequences, main = "Overlapping time sequences in hydraulic data",
