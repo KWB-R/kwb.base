@@ -654,6 +654,7 @@ artificialHydrograph <- function(
 #' @param step time step in seconds
 #' 
 #' @return data frame with columns \emph{t} (timestamp) and \emph{y} (sinus values)
+#' @export
 #' @importFrom kwb.datetime hsToPosix
 hsExampleTSeries <- function(step)
 {
