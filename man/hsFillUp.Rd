@@ -6,7 +6,7 @@
 \usage{
 hsFillUp(
   tseries,
-  tsField = names(tseries)[posixColumnAtPosition(tseries)[1]],
+  tsField = names(tseries)[kwb.utils::posixColumnAtPosition(tseries)[1]],
   step_s = 60,
   forceStep = TRUE,
   limits = NULL,

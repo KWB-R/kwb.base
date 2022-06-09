@@ -6,6 +6,9 @@
 \usage{
 demo_hsFillUp()
 }
+\value{
+demo plot hsFillUp
+}
 \description{
 Create Plot Demonstrating hsFillUp()
 }

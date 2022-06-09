@@ -24,13 +24,12 @@ Description: This package originally contained all the different helper
 License: MIT + file LICENSE
 URL: https://github.com/KWB-R/kwb.base/
 BugReports: https://github.com/KWB-R/kwb.base/issues
-Depends: 
+Imports: 
     kwb.datetime,
     kwb.db,
     kwb.event,
     kwb.plot,
-    kwb.utils
-Imports: 
+    kwb.utils,
     xts
 Suggests: 
     testthat

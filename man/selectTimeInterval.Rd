@@ -9,7 +9,7 @@ selectTimeInterval(
   t1 = NULL,
   t2 = NULL,
   width = "-7d",
-  posixColumn = posixColumnAtPosition(x),
+  posixColumn = kwb.utils::posixColumnAtPosition(x),
   dbg = TRUE
 )
 }

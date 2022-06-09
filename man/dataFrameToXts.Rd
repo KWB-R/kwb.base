@@ -6,7 +6,7 @@
 \usage{
 dataFrameToXts(
   dataFrame,
-  timeColumn = names(dataFrame)[posixColumnAtPosition(dataFrame)[1]]
+  timeColumn = names(dataFrame)[kwb.utils::posixColumnAtPosition(dataFrame)[1]]
 )
 }
 \arguments{

@@ -25,9 +25,9 @@
 #' @param dbg If TRUE, debug messages are shown
 #'
 #' @return Returns a data.frame
-#'   
+#' @importFrom kwb.utils catIf posixColumnAtPosition
 hsFillUp <- function(
-  tseries, tsField = names(tseries)[posixColumnAtPosition(tseries)[1]], 
+  tseries, tsField = names(tseries)[kwb.utils::posixColumnAtPosition(tseries)[1]], 
   step_s = 60, forceStep = TRUE, limits = NULL, interpol = TRUE, 
   includeOrig = TRUE, default = NA, dbg = FALSE
 )
@@ -55,7 +55,7 @@ hsFillUp <- function(
     tbeg <- limits[i, 1]
     tend <- limits[i, 2]
     
-    catIf(dbg, sprintf("tbeg: %s, tend: %s\n", tbeg, tend))
+    kwb.utils::catIf(dbg, sprintf("tbeg: %s, tend: %s\n", tbeg, tend))
     
     ## Cut block of rows representing timestamps between tbeg and tend from
     ## tseries
@@ -262,7 +262,7 @@ fillup <- function(
   ## For each value field
   for (field in fields) {
     
-    catIf(dbg, sprintf("Interpolating field: %s\n", field))
+    kwb.utils::catIf(dbg, sprintf("Interpolating field: %s\n", field))
     
     interpolated <- .getInterpolatedValues(
       timestamps = tseries[[tsField]], 
@@ -280,6 +280,10 @@ fillup <- function(
 }
 
 # .getInterpolatedValues -------------------------------------------------------
+#' @keywords internal
+#' @noRd
+#' @noMd
+#' @importFrom stats approx
 .getInterpolatedValues <- function
 (
   timestamps, values, requiredTimestamps, default = NA, dbg = FALSE
@@ -300,7 +304,7 @@ fillup <- function(
     # one value or the given default value!
     substituteValue <- ifelse(length(values) == 1, values, default)
     
-    catIf(dbg, "Not at least two non-NA values available for interpolation!\n",
+    kwb.utils::catIf(dbg, "Not at least two non-NA values available for interpolation!\n",
           "Using one value for all timestamps:", substituteValue, "\n")
     
     interpolated <- rep(substituteValue, length(requiredTimestamps))
@@ -320,7 +324,7 @@ fillup <- function(
   
   columnNames <- c(tsField, columnNames)
   
-  catIf(dbg, sprintf("Column names: %s\n", paste(columnNames, collapse = ", ")))
+  kwb.utils::catIf(dbg, sprintf("Column names: %s\n", paste(columnNames, collapse = ", ")))
   
   columnNames
 }
@@ -349,6 +353,10 @@ fillup <- function(
 
 #' Create Plot Demonstrating hsFillUp()
 #' 
+#' @export
+#' @return demo plot hsFillUp
+#' @importFrom stats rnorm
+#' @importFrom  graphics lines plot
 demo_hsFillUp <- function()
 {
   message(
@@ -364,7 +372,7 @@ demo_hsFillUp <- function()
   )
   
   limits <- data.frame(
-    from = hsToPosix("2010-03-28"), to = hsToPosix("2010-03-29")
+    from = kwb.datetime::hsToPosix("2010-03-28"), to = kwb.datetime::hsToPosix("2010-03-29")
   )
   
   df_2 <- hsFillUp(df_1, includeOrig = FALSE, limits = limits)

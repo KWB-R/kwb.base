@@ -31,16 +31,16 @@ if (FALSE)
 #'
 #' @return xts object with timestamps taken from timestamp column. Non-numeric
 #'   columns are removed.
-#' 
+#' @importFrom xts xts
 dataFrameToXts <- function(
-  dataFrame, timeColumn = names(dataFrame)[posixColumnAtPosition(dataFrame)[1]]
+  dataFrame, timeColumn = names(dataFrame)[kwb.utils::posixColumnAtPosition(dataFrame)[1]]
 )
 { 
   numericColumns <- sapply(
     names(dataFrame), FUN = function(x) is.numeric(dataFrame[[x]])
   )
   
-  xts(
+  xts::xts(
     x = dataFrame[, numericColumns, drop = FALSE], 
     order.by = dataFrame[[timeColumn]],
     tzone = attr(dataFrame[[timeColumn]], which = "tzone")
@@ -56,6 +56,7 @@ dataFrameToXts <- function(
 #' @param firstDay first day as text, in "yyyy-mm-dd" format
 #' @param lastDay last day as text, in "yyyy-mm-dd" format  
 #' @param dbg if \code{TRUE}, debug messages are shown
+#' @importFrom kwb.utils catIf
 #' 
 selectTimeIntervalDays <- function(
   dat, days = 7, firstDay = as.character(as.Date(lastDay) - days),
@@ -92,9 +93,9 @@ selectTimeIntervalDays <- function(
 #' @param posixColumn name or number of column in \code{x} containing the
 #'   relevant timestamps
 #' @param dbg if \code{TRUE}, debug messages are shown
-#' 
+#' @importFrom kwb.utils posixColumnAtPosition
 selectTimeInterval <- function(x, t1 = NULL, t2 = NULL, width = "-7d",
-  posixColumn = posixColumnAtPosition(x), dbg = TRUE
+  posixColumn = kwb.utils::posixColumnAtPosition(x), dbg = TRUE
 )
 {
   seconds <- intervalWidthToSeconds(width)
@@ -117,11 +118,11 @@ selectTimeInterval <- function(x, t1 = NULL, t2 = NULL, width = "-7d",
     
   } else if (is.null(t1)) {
     
-    t1 <- hsToPosix(t2) + seconds
+    t1 <- kwb.datetime::hsToPosix(t2) + seconds
     
   } else if (is.null(t2)) {
     
-    t2 <- hsToPosix(t1) + seconds
+    t2 <- kwb.datetime::hsToPosix(t1) + seconds
   }
   
   kwb.utils::catIf(dbg, sprintf(
@@ -156,7 +157,7 @@ intervalWidthToSeconds <- function(intervalWidth)
 #' First Timestamp in Data Frame
 #' 
 #' @param x data frame containing a date/time column
-#' 
+#' @importFrom utils head
 firstTimestamp <- function(x)
 {
   timestamps <- firstPosixColumn(x)
@@ -176,7 +177,7 @@ firstTimestamp <- function(x)
 #' Last Timestamp in Data Frame
 #' 
 #' @param x data frame containing a date/time column  
-#' 
+#' @importFrom utils tail
 lastTimestamp <- function(x)
 {
   timestamps <- firstPosixColumn(x)
@@ -201,12 +202,12 @@ lastTimestamp <- function(x)
 #' @param dbg if \code{TRUE}, debug messages are shown
 #' 
 #' @return time series, shifted to winter time (timezone is set to "UTC")
-#' 
+#' @importFrom kwb.utils printIf
 hsST2WT <- function(tstamps, dbg = FALSE)
 {
   ## "hardcode" timezone to UTC, thus taking timestamps as they are and 
   ## preventing from any time conversion
-  tstamps.st <- hsToPosix(format(tstamps, "%Y-%m-%d %H:%M:%S"))
+  tstamps.st <- kwb.datetime::hsToPosix(format(tstamps, "%Y-%m-%d %H:%M:%S"))
   n <- length(tstamps.st)
   
   ## Which years are contained in tstamps?
@@ -216,7 +217,7 @@ hsST2WT <- function(tstamps, dbg = FALSE)
   yearRange <- range(years)
   dss <- hsDaylightSaving(year.first = yearRange[1], year.last = yearRange[2])
   
-  printIf(dbg, dss, "begin and end of daylight saving time in included years")
+  kwb.utils::printIf(dbg, dss, "begin and end of daylight saving time in included years")
 
   ## Init result timestamps with timestamps in summer time
   tstamps.wt <- tstamps.st
@@ -225,9 +226,9 @@ hsST2WT <- function(tstamps, dbg = FALSE)
   for (i in seq_len(nrow(dss))) {
     
     ## Limits of summer/winter time
-    tBegST3h <- hsToPosix(paste(dss$begST[i], "03:00:00"))
-    tEndST2h <- hsToPosix(paste(dss$endST[i], "02:00:00"))
-    tEndST3h <- hsToPosix(paste(dss$endST[i], "03:00:00"))
+    tBegST3h <- kwb.datetime::hsToPosix(paste(dss$begST[i], "03:00:00"))
+    tEndST2h <- kwb.datetime::hsToPosix(paste(dss$endST[i], "02:00:00"))
+    tEndST3h <- kwb.datetime::hsToPosix(paste(dss$endST[i], "03:00:00"))
     
     catIf(dbg, sprintf(
       "i:%d\ntBegST3h: %s\ntEndST2h: %s\ntEndST3h: %s\n", 
@@ -238,7 +239,7 @@ hsST2WT <- function(tstamps, dbg = FALSE)
     idx.st  <- which(tstamps.st >= tBegST3h & tstamps.st < tEndST2h)
     idx.amb <- which(tstamps.st >= tEndST2h & tstamps.st < tEndST3h)
     
-    printIf(dbg, tstamps.st[idx.amb], "Ambiguous timestamps")      
+    kwb.utils::printIf(dbg, tstamps.st[idx.amb], "Ambiguous timestamps")      
 
     ## Shift timestamps that are certainly in summer time back to winter time
     tstamps.wt[idx.st] <- tstamps.st[idx.st] - 3600              
@@ -263,8 +264,8 @@ hsST2WT <- function(tstamps, dbg = FALSE)
       
       if (! all(amb.1st == amb.2nd)) {
         
-        printIf(dbg, amb.1st, "1st half of ambiguous timestamps")
-        printIf(dbg, amb.2nd, "2nd half of ambiguous timestamps")
+        kwb.utils::printIf(dbg, amb.1st, "1st half of ambiguous timestamps")
+        kwb.utils::printIf(dbg, amb.2nd, "2nd half of ambiguous timestamps")
           
         stop("Cannot convert ambiguous timestamps!")      
         
@@ -291,7 +292,8 @@ hsST2WT <- function(tstamps, dbg = FALSE)
 #'
 #' @return data frame with columns \code{begST} (begin of summer time) and
 #'   \code{endST} (end of summer time)
-#' 
+#' @importFrom  kwb.utils defaultIfNULL
+#' @importFrom  kwb.datetime hsDateStr
 hsDaylightSaving <- function(year.first = NULL, year.last = NULL)
 { 
   thisYear <- as.integer(format(Sys.Date(), "%Y"))
@@ -367,11 +369,12 @@ hsDaylightSaving <- function(year.first = NULL, year.last = NULL)
 #' # 'C:/Users/hsonne/Documents/R/win-library/2.14/
 #' #   kwb.base/extdata/RExKwbBase.mdb'.
 #' # Timestamp field has been set as primary key.
-#' 
+#' @importFrom kwb.datetime hsToPosix
+#' @importFrom kwb.db hsSetPrimaryKey hsPutTable
 hsMkTimestamps <- function(from, to, step.s = 60, mdb, tbl, dbg = FALSE)
 {
   # Create sequence of POSIXct timestamps in UTC
-  tstamps = seq(hsToPosix(from), hsToPosix(to), by = step.s)
+  tstamps = seq(kwb.datetime::hsToPosix(from), kwb.datetime::hsToPosix(to), by = step.s)
 
   # Return vector of timestamps if no database is given
   if (missing(mdb)) return(tstamps)
@@ -382,12 +385,12 @@ hsMkTimestamps <- function(from, to, step.s = 60, mdb, tbl, dbg = FALSE)
     format.Date(from, strFormat), format.Date(to, strFormat), step.s)
 
   # Save table in database
-  tbl <- hsPutTable(mdb, data.frame(tstamp = tstamps), tbl, dbg = dbg)
+  tbl <- kwb.db::hsPutTable(mdb, data.frame(tstamp = tstamps), tbl, dbg = dbg)
   if (length(tbl) > 0) 
     cat(sprintf("Timestamps have been written to table '%s' in '%s'.\n", 
       tbl, mdb))
   
   # Set field "tstamps" as primary key
-  res <- hsSetPrimaryKey(mdb, tbl, "tstamp", dbg = dbg)
+  res <- kwb.db::hsSetPrimaryKey(mdb, tbl, "tstamp", dbg = dbg)
   cat("Timestamp field has been set as primary key.\n")
 }

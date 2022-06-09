@@ -10,7 +10,8 @@
 #'
 #' @return data frame containing those rows of \emph{dframe} that comply with
 #'   all of the filter criteria defined in \emph{columnValuePairs}
-#'   
+#' @importFrom kwb.utils printIf
+#' 
 hsFilterRowsWithValuesInColumns <- function(dframe, columnValuePairs)
 {
   for (columnName in names(columnValuePairs)) {
@@ -61,10 +62,10 @@ hsFilterRowsWithValuesInColumns <- function(dframe, columnValuePairs)
   expected <- expected[rep(seq_len(nrow(expected)), N), ]
   row.names(expected) <- NULL
   
-  printIf(TRUE, system.time(y_old <- hsLabValToVal_old(
+  kwb.utils::printIf(TRUE, system.time(y_old <- hsLabValToVal_old(
     labvalues, country = "de", stopOnError = FALSE)), "old")
   
-  printIf(TRUE, system.time(y_new <- hsLabValToVal(
+  kwb.utils::printIf(TRUE, system.time(y_new <- hsLabValToVal(
     labvalues, country = "de")), "new")
   
   c(old_version = identical(y_old, expected),
@@ -301,14 +302,16 @@ hsDelNaRowsOrCols <- function(df, rows = TRUE, drop = FALSE)
 #' ## Open PDF file in PDF viewer
 #' kwb.utils::hsShowPdf(pdf_file)
 #' }
-#' 
+#' @importFrom kwb.db hsSqlQuery
+#' @importFrom grDevices dev.off 
+#' @importFrom graphics plot
 hsDbTablePlotXY <- function(strDb, strTable, strX, strY, strPdfFile = NULL)
 {
   # Generate SQL string
   sql <- sprintf("SELECT t.[%s], t.[%s] FROM %s AS t", strX, strY, strTable)
   
   #@2011-12-21: hsSqlQuery instead of odbcConnectAccess, sqlQuery, odbcClose  
-  res <- hsSqlQuery(strDb, sql)
+  res <- kwb.db::hsSqlQuery(strDb, sql)
   
   # Open pdf device if file is given
   if (!is.null(strPdfFile)) {
@@ -352,7 +355,8 @@ hsDbTablePlotXY <- function(strDb, strTable, strX, strY, strPdfFile = NULL)
 #' 
 #' @return Returns \emph{tSeries}, reduced to rows representing a time within
 #'   the selected time interval between \emph{minDate} and \emph{maxDate}
-#'
+#' @importFrom kwb.utils catIf
+#' @importFrom kwb.datetime hsToPosix
 hsFilterPeriod <- function(
   tSeries, minDate, maxDate, tsField, maxIncluded = FALSE, dbg = FALSE
 )
@@ -383,7 +387,7 @@ hsFilterPeriod <- function(
   # period between minDate and maxDate
   if (! missing(minDate)) {
     
-    utcMin <- hsToPosix(minDate) #hsUTC(minDate, posixLt = TRUE) #as.POSIXlt(minDate, tz="UTC")
+    utcMin <- kwb.datetime::hsToPosix(minDate) #hsUTC(minDate, posixLt = TRUE) #as.POSIXlt(minDate, tz="UTC")
     
     kwb.utils::catIf(dbg, sprintf("Filter dates >= %s\n", minDate))
     
@@ -393,7 +397,7 @@ hsFilterPeriod <- function(
   
   if (! missing(maxDate)) {
     
-    utcMax <- hsToPosix(maxDate) #hsUTC(maxDate, posixLt = TRUE) # as.POSIXlt(maxDate, tz="UTC")
+    utcMax <- kwb.datetime::hsToPosix(maxDate) #hsUTC(maxDate, posixLt = TRUE) # as.POSIXlt(maxDate, tz="UTC")
     
     kwb.utils::catIf(dbg, sprintf(
       "Filter dates %s %s\n", ifelse(maxIncluded, "<=", "<"), maxDate
@@ -441,7 +445,7 @@ hsFilterPeriod <- function(
 #'
 #' @return This function returns whtat the plot function given in \code{plotFun}
 #'   returns
-#' 
+#' @importFrom grDevices dev.cur dev.set
 hsPlot <- function(dev, plotFun = graphics::plot, args)
 {
   cat("in hsPlot()... ")
@@ -474,7 +478,7 @@ hsPlot <- function(dev, plotFun = graphics::plot, args)
 #'
 #' @return ID of first (\emph{all} == FALSE) or IDs of all opened pdf devices,
 #'   as e.g. returned by \code{\link{dev.list}}
-#'   
+#' @importFrom grDevices dev.list   
 hsPdfDev <- function(all = FALSE)
 {
   dl <- grDevices::dev.list()
@@ -620,7 +624,8 @@ hsWait <- function(secs = 1)
 #' @param to last day as character string in format "yyyy-mm-dd"
 #' 
 #' @return data frame with columns \emph{DateTime} and \emph{values}
-#' 
+#' @importFrom kwb.datetime sequenceOfTimestamps toGmtRelativePosix
+#' @importFrom stats rnorm
 artificialHydrograph <- function(
   step.s = 3600, from = "2015-01-01", to = "2015-01-10"
 ) 
@@ -635,7 +640,7 @@ artificialHydrograph <- function(
       stats::rnorm(n, mean = 1) * cos(10*x)
   }
   
-  times <- toGmtRelativePosix(sequenceOfTimestamps(from, to, step.s = step.s))
+  times <- kwb.datetime::toGmtRelativePosix(kwb.datetime::sequenceOfTimestamps(from, to, step.s = step.s))
   
   data.frame(DateTime = times, values = FUN(times))
 }
@@ -649,13 +654,13 @@ artificialHydrograph <- function(
 #' @param step time step in seconds
 #' 
 #' @return data frame with columns \emph{t} (timestamp) and \emph{y} (sinus values)
-#' 
+#' @importFrom kwb.datetime hsToPosix
 hsExampleTSeries <- function(step)
 {
   ## Generate a data frame containing a sinus time series with
   ## values at every 5 minutes
-  t0 <- hsToPosix("2012-01-01 12:00:00")
-  t1 <- hsToPosix("2012-01-01 12:20:00")
+  t0 <- kwb.datetime::hsToPosix("2012-01-01 12:00:00")
+  t1 <- kwb.datetime::hsToPosix("2012-01-01 12:20:00")
   
   ts <- seq(from = t0, to = t1, by   = step)
   
@@ -677,7 +682,9 @@ hsExampleTSeries <- function(step)
 #' @param df data frame containing data to be used for the demonstration
 #' @param step time step in seconds
 #' @param to_pdf if \code{TRUE} the output goes into a PDF file
-#'  
+#' @importFrom kwb.datetime minTimeStep
+#' @importFrom kwb.utils preparePdfIf finishAndShowPdfIf
+#' @importFrom graphics abline axis par plot points legend
 demoGroupByInterval <- function(
   df = hsExampleTSeries(60), 
   step = kwb.datetime::minTimeStep(df[, 1]),
@@ -851,7 +858,8 @@ demoGroupByInterval <- function(
 #'
 #' ## ignore NA values by passing na.rm = TRUE to the aggregate function
 #' hsGroupByInterval(df, interval = 300, mean, na.rm = TRUE)
-#' 
+#' @importFrom stats aggregate
+#' @importFrom utils head
 hsGroupByInterval <- function(
   data, interval, FUN, tsField = names(data)[1], offset1 = 0, 
   offset2 = interval / 2, limits = FALSE, ..., dbg = FALSE
@@ -953,7 +961,8 @@ hsGroupByInterval <- function(
 #' @param labelpos see \code{\link[kwb.plot]{niceLabels}}
 #' @param mindist see \code{\link[kwb.plot]{niceLabels}}
 #' @param offset see \code{\link[kwb.plot]{niceLabels}}
-#' 
+#' @importFrom  kwb.plot niceLabels
+#' @importFrom kwb.utils warningDeprecated
 hsNiceLabels <- function(
   label, labelstep = NULL, labelpos = NULL, mindist = 1, offset = 0
 )

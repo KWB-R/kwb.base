@@ -41,5 +41,4 @@ hsDbTablePlotXY(kwb.db::xmdb(), "tbl_Qua", "myDateTime", "CSBf", pdf_file)
 ## Open PDF file in PDF viewer
 kwb.utils::hsShowPdf(pdf_file)
 }
-
 }
