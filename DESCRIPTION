@@ -18,7 +18,7 @@ Description: This package originally contained all the different helper
     still contains some functions that are used in different scripts of
     different KWB projects.  Currently, when loading this package, the
     packages kwb.datetime, kwb.db, kwb.event, kwb.plot and kwb.utils are
-    automaticallc loaded. I plan to change this behaviour with the next
+    automatically loaded. I plan to change this behaviour with the next
     release so that you need to load the other packages explicitly, i.e.
     with library(kwb.datetime), library(kwb.db), etc.
 License: MIT + file LICENSE
