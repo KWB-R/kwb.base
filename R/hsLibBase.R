@@ -10,6 +10,7 @@
 #'
 #' @return data frame containing those rows of \emph{dframe} that comply with
 #'   all of the filter criteria defined in \emph{columnValuePairs}
+#' @export
 #' @importFrom kwb.utils printIf
 #' 
 hsFilterRowsWithValuesInColumns <- function(dframe, columnValuePairs)
@@ -104,6 +105,7 @@ hsFilterRowsWithValuesInColumns <- function(dframe, columnValuePairs)
 #'   in case of detection limit exceedance, may be a substitute value. If there
 #'   were conversion errors, the column \emph{numericValue} containing the
 #'   indices of the wrongly formatted values in its attribute "errorIndices".
+#' @export
 #' @importFrom kwb.utils hsChrToNum
 hsLabValToVal <- function(
   x, country, detLimFactorBelow = 0.5, detLimFactorAbove = 2,
@@ -174,7 +176,7 @@ hsLabValToVal <- function(
 #'   Default value: 2
 #' @param stopOnError if TRUE, the program stops on conversion errors, otherwise
 #'   shows a warning
-#'
+#' @export
 #' @return data frame with columns \emph{outOfLimit} being one of "" (value
 #'   within detection limits), "<" (value below detection limit) or ">" (value
 #'   above detection limit) and \emph{numericValue} containing the value which,
@@ -227,8 +229,8 @@ hsLabValToVal_old <- function(
 #' @param rows if TRUE, rows that only contain NAs are deleted, else columns.
 #' @param drop if TRUE and only one row/column remains this row/column is returned
 #'   in forms of a vector instead as a data frame.
-#' @importFrom kwb.utils isNaInAllColumns isNaInAllRows isNullOrEmpty
 #' @export
+#' @importFrom kwb.utils isNaInAllColumns isNaInAllRows isNullOrEmpty
 hsDelNaRowsOrCols <- function(df, rows = TRUE, drop = FALSE)
 {  
   ## Find rows that are NA in all columns
@@ -287,7 +289,7 @@ hsDelNaRowsOrCols <- function(df, rows = TRUE, drop = FALSE)
 #'
 #' @return If the output device is a pdf file the result of the dev.off()
 #'   command is returned.
-#'
+#' @export
 #' @examples
 #' \dontrun{
 #' ## Plot CSB vs. timestamp values from table "tbl_STA_CAL" in the
@@ -306,6 +308,7 @@ hsDelNaRowsOrCols <- function(df, rows = TRUE, drop = FALSE)
 #' @importFrom kwb.db hsSqlQuery
 #' @importFrom grDevices dev.off 
 #' @importFrom graphics plot
+
 hsDbTablePlotXY <- function(strDb, strTable, strX, strY, strPdfFile = NULL)
 {
   # Generate SQL string
@@ -447,6 +450,7 @@ hsFilterPeriod <- function(
 #'
 #' @return This function returns whtat the plot function given in \code{plotFun}
 #'   returns
+#' @export
 #' @importFrom grDevices dev.cur dev.set
 hsPlot <- function(dev, plotFun = graphics::plot, args)
 {
@@ -480,6 +484,7 @@ hsPlot <- function(dev, plotFun = graphics::plot, args)
 #'
 #' @return ID of first (\emph{all} == FALSE) or IDs of all opened pdf devices,
 #'   as e.g. returned by \code{\link{dev.list}}
+#' @export
 #' @importFrom grDevices dev.list   
 hsPdfDev <- function(all = FALSE)
 {
@@ -517,7 +522,7 @@ hsPdfDev <- function(all = FALSE)
 #'   to decreasing values of field1
 #' @param boolDesc2 if TRUE, rows in result matrix will be ordered according to
 #'   decreasing values of field2
-#'
+#' @export
 #' @return matrix with as many rows as there are distinct values in field1 and
 #'   as many columns as there are distinct values in field2 of the input
 #'   data.frame. The matrix contains the sum of values in the specified value
@@ -590,7 +595,7 @@ hsGroupBy2Fields <- function(
 #'
 #' @param nPlots number of total plots
 #' @param nPlotsPerRow number of plots per row
-#'
+#' @export
 #' @return Number of rows needed to place all the plots.
 #'   
 hsMfRows <- function(nPlots, nPlotsPerRow) 
@@ -605,7 +610,7 @@ hsMfRows <- function(nPlots, nPlotsPerRow)
 #' Waits for the specified number of seconds.
 #' 
 #' @param secs number of seconds to wait
-#' 
+#' @export
 hsWait <- function(secs = 1)
 {
   t <- Sys.time()
@@ -626,6 +631,7 @@ hsWait <- function(secs = 1)
 #' @param to last day as character string in format "yyyy-mm-dd"
 #' 
 #' @return data frame with columns \emph{DateTime} and \emph{values}
+#' @export
 #' @importFrom kwb.datetime sequenceOfTimestamps toGmtRelativePosix
 #' @importFrom stats rnorm
 artificialHydrograph <- function(
@@ -685,6 +691,7 @@ hsExampleTSeries <- function(step)
 #' @param df data frame containing data to be used for the demonstration
 #' @param step time step in seconds
 #' @param to_pdf if \code{TRUE} the output goes into a PDF file
+#' @export
 #' @importFrom kwb.datetime minTimeStep
 #' @importFrom kwb.utils preparePdfIf finishAndShowPdfIf
 #' @importFrom graphics abline axis par plot points legend
@@ -965,6 +972,7 @@ hsGroupByInterval <- function(
 #' @param labelpos see \code{\link[kwb.plot]{niceLabels}}
 #' @param mindist see \code{\link[kwb.plot]{niceLabels}}
 #' @param offset see \code{\link[kwb.plot]{niceLabels}}
+#' @export
 #' @importFrom  kwb.plot niceLabels
 #' @importFrom kwb.utils warningDeprecated
 hsNiceLabels <- function(

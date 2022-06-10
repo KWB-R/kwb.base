@@ -31,6 +31,7 @@ if (FALSE)
 #'
 #' @return xts object with timestamps taken from timestamp column. Non-numeric
 #'   columns are removed.
+#' @export
 #' @importFrom xts xts
 dataFrameToXts <- function(
   dataFrame, timeColumn = names(dataFrame)[kwb.utils::posixColumnAtPosition(dataFrame)[1]]
@@ -56,6 +57,7 @@ dataFrameToXts <- function(
 #' @param firstDay first day as text, in "yyyy-mm-dd" format
 #' @param lastDay last day as text, in "yyyy-mm-dd" format  
 #' @param dbg if \code{TRUE}, debug messages are shown
+#' @export
 #' @importFrom kwb.utils catIf isNullOrEmpty
 #' 
 selectTimeIntervalDays <- function(
@@ -93,6 +95,7 @@ selectTimeIntervalDays <- function(
 #' @param posixColumn name or number of column in \code{x} containing the
 #'   relevant timestamps
 #' @param dbg if \code{TRUE}, debug messages are shown
+#' @export
 #' @importFrom kwb.utils posixColumnAtPosition
 #' @importFrom kwb.datetime timestampIn
 selectTimeInterval <- function(x, t1 = NULL, t2 = NULL, width = "-7d",
@@ -139,7 +142,7 @@ selectTimeInterval <- function(x, t1 = NULL, t2 = NULL, width = "-7d",
 #' 
 #' @param intervalWidth character string starting with numeric characters 0-9
 #'   and ending with either of "d" (days), "h" (hours) or "m" (minutes)
-#' 
+#' @export
 intervalWidthToSeconds <- function(intervalWidth)
 {
   secondsPerUnit <- c(d = 86400, h = 3600, m = 60)
@@ -158,6 +161,7 @@ intervalWidthToSeconds <- function(intervalWidth)
 #' First Timestamp in Data Frame
 #' 
 #' @param x data frame containing a date/time column
+#' @export
 #' @importFrom utils head
 firstTimestamp <- function(x)
 {
@@ -178,6 +182,7 @@ firstTimestamp <- function(x)
 #' Last Timestamp in Data Frame
 #' 
 #' @param x data frame containing a date/time column  
+#' @export
 #' @importFrom utils tail
 #' @importFrom kwb.utils firstPosixColumn
 lastTimestamp <- function(x)
@@ -204,8 +209,8 @@ lastTimestamp <- function(x)
 #' @param dbg if \code{TRUE}, debug messages are shown
 #' 
 #' @return time series, shifted to winter time (timezone is set to "UTC")
-#' @importFrom kwb.utils printIf
 #' @export
+#' @importFrom kwb.utils printIf
 hsST2WT <- function(tstamps, dbg = FALSE)
 {
   ## "hardcode" timezone to UTC, thus taking timestamps as they are and 
@@ -295,6 +300,7 @@ hsST2WT <- function(tstamps, dbg = FALSE)
 #'
 #' @return data frame with columns \code{begST} (begin of summer time) and
 #'   \code{endST} (end of summer time)
+#' @export
 #' @importFrom  kwb.utils defaultIfNULL
 #' @importFrom  kwb.datetime hsDateStr
 hsDaylightSaving <- function(year.first = NULL, year.last = NULL)
@@ -359,7 +365,7 @@ hsDaylightSaving <- function(year.first = NULL, year.last = NULL)
 #'
 #' @return Returns vecotor of timestamps if \emph{mdb} is missing or nothing if
 #'   timestamp table has been generated in database given in \emph{mdb}.
-#'
+#' @export
 #' @examples
 #' \dontrun{
 #' ## Write timestamps of January 2011 with five minutes step into example db.
