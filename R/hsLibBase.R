@@ -358,6 +358,7 @@ hsDbTablePlotXY <- function(strDb, strTable, strX, strY, strPdfFile = NULL)
 #'   the selected time interval between \emph{minDate} and \emph{maxDate}
 #' @importFrom kwb.utils catIf
 #' @importFrom kwb.datetime hsToPosix
+#' @export
 hsFilterPeriod <- function(
   tSeries, minDate, maxDate, tsField, maxIncluded = FALSE, dbg = FALSE
 )

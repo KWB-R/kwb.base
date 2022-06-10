@@ -3,6 +3,7 @@
 export(demo_hsFillUp)
 export(hsDelNaRowsOrCols)
 export(hsExampleTSeries)
+export(hsFilterPeriod)
 export(hsGroupByInterval)
 export(hsST2WT)
 importFrom(grDevices,dev.cur)
