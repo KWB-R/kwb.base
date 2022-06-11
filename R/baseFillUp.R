@@ -25,7 +25,7 @@
 #' @param dbg If TRUE, debug messages are shown
 #' @export
 #' @return Returns a data.frame
-#' @importFrom kwb.utils catIf posixColumnAtPosition
+#' @importFrom kwb.utils catIf posixColumnAtPosition selectColumns
 hsFillUp <- function(
   tseries, tsField = names(tseries)[kwb.utils::posixColumnAtPosition(tseries)[1]], 
   step_s = 60, forceStep = TRUE, limits = NULL, interpol = TRUE, 
@@ -35,76 +35,73 @@ hsFillUp <- function(
   # Stop if there are unexpected argument values
   .stopOnBadArguments(tseries, step_s, limits)
   
-  ## Check if there are timestamps that are not at exact minutes (seconds = 0)
-  .warnOnNoStepMultiples(timestamps = tseries[[tsField]], step_s = step_s)
+  # Select the vector of times
+  timestamps <- kwb.utils::selectColumns(tseries, tsField)
+  
+  # Check if there are timestamps that are not at exact minutes (seconds = 0)
+  .warnOnNoStepMultiples(timestamps = timestamps, step_s = step_s)
   
   # If no limits are given use the full time range of the timestamps in the
   # given data frame as "artificial" limits  
   if (is.null(limits)) {
-    timeRange <- range(tseries[[tsField]])
-    limits <- data.frame(from = timeRange[1], to = timeRange[2])
+    timeRange <- range(timestamps)
+    limits <- data.frame(from = timeRange[1L], to = timeRange[2L])
   }
   
-  ## Initialise result (will become a data.frame)
+  # Initialise result (will become a data.frame)
   result <- NULL
 
-  ## Call fillup for each data block defined by the intervals given in limits 
+  # Call fillup for each data block defined by the intervals given in limits 
   # (may be only one interval)
-  for (i in seq_len(nrow(limits))) {
+  blocks <- lapply(seq_len(nrow(limits)), function(i) {
     
-    tbeg <- limits[i, 1]
-    tend <- limits[i, 2]
+    tbeg <- limits[[1L]][i]
+    tend <- limits[[2L]][i]
     
     kwb.utils::catIf(dbg, sprintf("tbeg: %s, tend: %s\n", tbeg, tend))
     
-    ## Cut block of rows representing timestamps between tbeg and tend from
-    ## tseries
-    selected <- tseries[[tsField]] >= tbeg & tseries[[tsField]] <= tend
+    # Cut block of rows representing timestamps between tbeg and tend
+    inRange <- kwb.utils::inRange(timestamps, tbeg, tend)
     
     # Skip empty areas
-    if (any(selected)) {
-
-      ## Call fillup for the data block, not giving limits
-      blockResult <- fillup(
-        tseries = tseries[selected, ],
-        tsField = tsField, 
-        step_s = step_s, 
-        forceStep = forceStep, 
-        interpol = interpol, 
-        includeOrig = includeOrig, 
-        default = default, 
-        dbg = dbg      
-      )
-      
-      ## add filled-up data block to result data.frame
-      result <- rbind(result, blockResult)     
-    }
-    else {
+    if (!any(inRange)) {
       warning("No data available between the given limits: ",
               tbeg, " and ", tend, "!")
+      return()
     }
-  }    
+      
+    # Call fillup for the whole data block, not giving limits
+    fillup(
+      tseries = tseries[inRange, , drop = FALSE],
+      tsField = tsField, 
+      step_s = step_s, 
+      forceStep = forceStep, 
+      interpol = interpol, 
+      includeOrig = includeOrig, 
+      default = default, 
+      dbg = dbg      
+    )
+  })
   
-  result  
+  do.call(rbind, blocks)
 }
 
 # .stopOnBadArguments ----------------------------------------------------------
 .stopOnBadArguments <- function(tseries, step_s, limits)
 {
-  ## The timeseries must be given as a data.frame
-  if (class(tseries)[1] != "data.frame") {
-    stop(paste("In tseries, a data.frame must be given, containing timestamps",
-               "in the first column.\n"))
+  # The timeseries must be given as a data.frame
+  if (!inherits(tseries, "data.frame")) {
+    stop("In tseries, a data.frame must be given, containing timestamps",
+         "in the first column.")
   }
   
-  ## The time-step must be given as a number
-  if (! is.numeric(step_s)) {
+  # The time-step must be given as a number
+  if (!is.numeric(step_s)) {
     stop(sprintf("step_s must be numeric (is %s).", class(step_s)))
   }
   
-  ## If limits are given they must be of type matrix or data.frame
-  if (! is.null(limits) && class(limits) != "data.frame" 
-      && class(limits) != "matrix") {
+  # If limits are given they must be of type matrix or data.frame
+  if (!is.null(limits) && !(class(limits) %in% c("data.frame", "matrix"))) {
     stop(sprintf("limits must be data.frame or matrix (is %s).", class(limits)))
   }  
 }
@@ -113,11 +110,10 @@ hsFillUp <- function(
 .warnOnNoStepMultiples <- function(timestamps, step_s)
 {
   isNoStepMultiple <- as.integer(timestamps) %% step_s != 0
-  numberOfNoStepMultiples <- sum(isNoStepMultiple)
   
-  if (numberOfNoStepMultiples > 0) {
+  if (n <- sum(isNoStepMultiple)) {
     
-    cat("There are", numberOfNoStepMultiples, "timestamps",
+    cat("There are", n, "timestamps",
         "(out of a total of", length(timestamps), ") that are not multiples",
         "of the timestep (", step_s, "seconds ):\n")
     
@@ -152,57 +148,57 @@ hsFillUp <- function(
 #' @return Returns a data.frame
 #' @export
 #' @importFrom kwb.datetime roundTime
+#' @importFrom kwb.utils selectColumns
 fillup <- function(
   tseries, tsField, step_s, forceStep, interpol, includeOrig, default = NA, 
   dbg = FALSE   
 )
 {
-  ## Initialise result (will become a data.frame)
+  # Initialise result (will become a data.frame)
   result <- NULL
   
-  ## Fill-up between the first and the last timestamp of the given time series
-  timeRange <- range(tseries[[tsField]])
+  # Fill-up between the first and the last timestamp of the given time series
+  timeRange <- range(kwb.utils::selectColumns(tseries, tsField))
   
-  ## If needed, get lower minimum or greater maximum representing multiples
-  ## of the time step.
-  tbeg <- kwb.datetime::roundTime(timeRange[1], step_s, 1)
-  tend <- kwb.datetime::roundTime(timeRange[2], step_s, 0)      
+  # If needed, get lower minimum or greater maximum representing multiples
+  # of the time step.
+  tbeg <- kwb.datetime::roundTime(timeRange[1L], step_s, direction = 1L)
+  tend <- kwb.datetime::roundTime(timeRange[2L], step_s, direction = 0L)
   
-  ## Generate the complete series of "regular" timestamps (multiples of 
-  ## time-step) between tbeg and tend
+  # Generate the complete series of "regular" timestamps (multiples of 
+  # time-step) between tbeg and tend
   
-  ## Handle the special case of only one value
-  if (tbeg == tend) {
-    timestamps <- tbeg
+  # Handle the special case of only one value
+  timestamps <- if (tbeg == tend) {
+    tbeg
   } else {
-    timestamps <- seq(tbeg, tend, by = step_s)    
+    seq(tbeg, tend, by = step_s)    
   }
   
   tsBlock <- tseries
   
   if (dbg) {
-    
     .showStartAndEndOfBlock(tsBlock, tbeg, tend, timestamps)
   }
   
-  ## Merge all timestamps with time series block by joining the regular 
-  ## timestamps (multiples of time-step) with the timestamps of the given 
-  ## timeseries block:
-  ## - If forcStep is TRUE we do a "left join", where the result only contains
-  ##   the "regular" timestamps (multiples of time-step).
-  ## - If forcStep is FALSE we do a "left or right join", where the result 
-  ##   contains both all "regular" timestamps (multiples of time-step) and all
-  ##   timestamps contained in the original timeseries.
+  # Merge all timestamps with time series block by joining the regular 
+  # timestamps (multiples of time-step) with the timestamps of the given 
+  # timeseries block:
+  # - If forceStep is TRUE we do a "left join", where the result only contains
+  #   the "regular" timestamps (multiples of time-step).
+  # - If forceStep is FALSE we do a "left or right join", where the result 
+  #   contains both all "regular" timestamps (multiples of time-step) and all
+  #   timestamps contained in the original timeseries.
   tsBlock <- merge(
     x = data.frame(timestamps = timestamps), 
     y = tsBlock, 
     by.x = "timestamps", 
     by.y = tsField, 
     all.x = TRUE, 
-    all.y = ! forceStep
+    all.y = !forceStep
   )
   
-  ## Interpolate values, if desired
+  # Interpolate values, if desired
   if (interpol) {
     tsBlock <- .interpolateAllColumns(
       tsBlock = tsBlock, 
@@ -213,13 +209,13 @@ fillup <- function(
     )
   }  
   
-  ## Set result data frame
+  # Set result data frame
   result <- tsBlock
   
-  ## Get column names without timestamp column
+  # Get column names without timestamp column
   dataColumnNames <- setdiff(colnames(tseries), tsField)
   
-  ## Set column names in result data.frame
+  # Set column names in result data.frame
   names(result) <- .newColumnNames(
     columnNames = dataColumnNames, 
     tsField = tsField, 
@@ -234,7 +230,7 @@ fillup <- function(
     includeOrig = includeOrig
   )
   
-  result[, columns]
+  result[, columns, drop = FALSE]
 }
 
 # .showStartAndEndOfBlock ------------------------------------------------------
@@ -253,6 +249,7 @@ fillup <- function(
 }
 
 # .interpolateAllColumns -------------------------------------------------------
+#' @importFrom kwb.utils catIf selectColumns
 .interpolateAllColumns <- function(
   tsBlock, tseries, tsField, default = NA, dbg = FALSE
 )
@@ -260,20 +257,20 @@ fillup <- function(
   # Skip the timestamp field itself
   fields <- setdiff(colnames(tseries), tsField)
   
-  ## For each value field
+  # For each value field
   for (field in fields) {
     
     kwb.utils::catIf(dbg, sprintf("Interpolating field: %s\n", field))
     
     interpolated <- .getInterpolatedValues(
-      timestamps = tseries[[tsField]], 
-      values = tseries[[field]], 
+      timestamps = kwb.utils::selectColumns(tseries, tsField), 
+      values = kwb.utils::selectColumns(tseries, field), 
       requiredTimestamps = tsBlock$timestamps, 
       default = default, 
       dbg = dbg
     )
     
-    ## Add column with interpolated values to the result data.frame
+    # Add column with interpolated values to the result data.frame
     tsBlock <- cbind(tsBlock, interpolated)
   }
   
@@ -285,47 +282,50 @@ fillup <- function(
 #' @noRd
 #' @noMd
 #' @importFrom stats approx
-.getInterpolatedValues <- function
-(
+#' @importFrom kwb.utils catIf
+.getInterpolatedValues <- function(
   timestamps, values, requiredTimestamps, default = NA, dbg = FALSE
 )
 {
-  ## We need at least two non-NA values to interpolate
-  if (sum(!is.na(values)) > 1 ) {
+  # We need at least two non-NA values to interpolate
+  if (sum(!is.na(values)) > 1L) {
     
     # Calculate interpolation for this field. approx returns a list with
     # components x and y of which we use the y component.
     interpolated <- stats::approx(
       timestamps, values, xout = requiredTimestamps
     )$y
-  }
-  else {
+    
+  } else {
     
     # Determine a subsitute value. Either the value itself if there is only
     # one value or the given default value!
     substituteValue <- ifelse(length(values) == 1, values, default)
     
-    kwb.utils::catIf(dbg, "Not at least two non-NA values available for interpolation!\n",
-          "Using one value for all timestamps:", substituteValue, "\n")
+    kwb.utils::catIf(
+      dbg, "Not at least two non-NA values available for interpolation!\n",
+      "Using one value for all timestamps:", substituteValue, "\n"
+    )
     
     interpolated <- rep(substituteValue, length(requiredTimestamps))
   }
   
   interpolated
-  ### list with components \emph{x} (requiredTimestamps) and \emph{y}
-  ### (interpolated values)
 }
 
 # .newColumnNames --------------------------------------------------------------
+#' @importFrom kwb.utils catIf
 .newColumnNames <- function(columnNames, tsField, interpol, dbg = FALSE)
 {
   if (interpol) {
-    columnNames <- c(paste(columnNames, "orig", sep = "_"), columnNames)
+    columnNames <- c(paste0(columnNames, "_orig"), columnNames)
   }
   
   columnNames <- c(tsField, columnNames)
   
-  kwb.utils::catIf(dbg, sprintf("Column names: %s\n", paste(columnNames, collapse = ", ")))
+  kwb.utils::catIf(
+    dbg, sprintf("Column names: %s\n", paste(columnNames, collapse = ", "))
+  )
   
   columnNames
 }
@@ -335,19 +335,19 @@ fillup <- function(
   numberOfColumns, numberOfDataColumns, interpol, includeOrig
 )
 {
-  ## Reorder columns
-  columnNumbers <- 1
+  # Start vector of column indices, starting with 1
+  j <- 1L
   
   if (interpol) {
-    columnNumbers <- c(columnNumbers, (numberOfDataColumns + 2):numberOfColumns)
+    j <- c(j, (numberOfDataColumns + 2L):numberOfColumns)
   }
   
-  ## If desired, include original columns  
+  # If desired, include original columns  
   if (!interpol || includeOrig) {
-    columnNumbers <- c(columnNumbers, 2:(numberOfDataColumns + 1))
+    j <- c(j, 2:(numberOfDataColumns + 1L))
   }
   
-  columnNumbers
+  j
 }
 
 # demo_hsFillUp ----------------------------------------------------------------
@@ -357,7 +357,8 @@ fillup <- function(
 #' @return demo plot hsFillUp
 #' @export
 #' @importFrom stats rnorm
-#' @importFrom  graphics lines plot
+#' @importFrom graphics lines plot
+#' @importFrom kwb.datetime hsToPosix
 demo_hsFillUp <- function()
 {
   message(
@@ -373,7 +374,8 @@ demo_hsFillUp <- function()
   )
   
   limits <- data.frame(
-    from = kwb.datetime::hsToPosix("2010-03-28"), to = kwb.datetime::hsToPosix("2010-03-29")
+    from = kwb.datetime::hsToPosix("2010-03-28"), 
+    to = kwb.datetime::hsToPosix("2010-03-29")
   )
   
   df_2 <- hsFillUp(df_1, includeOrig = FALSE, limits = limits)
