@@ -37,14 +37,12 @@ dataFrameToXts <- function(
   dataFrame, timeColumn = names(dataFrame)[kwb.utils::posixColumnAtPosition(dataFrame)[1]]
 )
 { 
-  numericColumns <- sapply(
-    names(dataFrame), FUN = function(x) is.numeric(dataFrame[[x]])
-  )
+  order.by <- dataFrame[[timeColumn]]
   
   xts::xts(
-    x = dataFrame[, numericColumns, drop = FALSE], 
-    order.by = dataFrame[[timeColumn]],
-    tzone = attr(dataFrame[[timeColumn]], which = "tzone")
+    x = dataFrame[, sapply(dataFrame, is.numeric), drop = FALSE], 
+    order.by = order.by,
+    tzone = attr(order.by, "tzone")
   )
 }
 
